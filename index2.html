@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <h1 class="casatitulo">Soy nuevo siendo Trujillo</h1>
+    <p>El Jose Armando Trujillo Cromático Guzmán me enseño a ser un trujillo</p>
+    <h2>Ahora soy el: José Armando HTML Guzmán</h2>
+    <h2>Metas siendo trujillo</h2>
+    <ul>
+        <li>Ser un buen trujillo</li>
+        <li>Hacer reir a la gente</li>
+        <li>Ser un buen amigo</li>
+        <li>Conocer al Trujillo Prime</li>
+        <li>Conocer mas Trujillos</li>
+    <img src="img/yo.png" alt="Imagen no Cargada" width="300" height="300" class="imagen-centrada">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v23.0"></script>
+
+    <div id="comentarios-facebook" class="fb-comments-container">
+        <div class="fb-comments" data-href="https://magnificent-cobbler-196570.netlify.app/index2" data-width="350" data-numposts="6"></div>
+    </div>
+    <div class="musica-centro">
+        <audio id="audioTrujillo" src="Hipocritas.mp3" autoplay loop></audio>
+        <button id="botonMusica" class="boton-grande">Pausar música</button>
+    </div>
+    <script>
+        const audio = document.getElementById('audioTrujillo');
+        const boton = document.getElementById('botonMusica');
+        boton.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                boton.textContent = 'Pausar música';
+            } else {
+                audio.pause();
+                boton.textContent = 'Reproducir música';
+            }
+        });
+    </script>
+    <h6>Ayuda estoy atrapado en un HTML</h6>
+    <div class="boton-centro">
+        <a href="index5.html" class="boton-grande">Jugar Tetris</a>
+    </div>
+    <div class="boton-centro">
+        <a href="index6.html" class="boton-grande">Jugar juego pedorro de motocicleta :v</a>
+    </div>
+</body>
+</html>

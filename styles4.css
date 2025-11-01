@@ -1,0 +1,155 @@
+.casatitulo {
+    text-align: center;
+    color: white;
+}
+
+/* body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: red;
+} */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}    
+
+body {
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    background-color: red;
+}
+
+/* .imagen-centrada {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+.imagen-centrada {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.boton-centro {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* .boton-grande {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 40px;
+    font-size: 2rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+    cursor: pointer;
+}
+.boton-grande:hover {
+    background-color: #0056b3;
+} */
+
+.boton-centro {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.boton-grande {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 40px;
+    font-size: 2rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+    cursor: pointer;
+}
+.boton-grande:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .boton-grande {
+        max-width: 95vw;
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 14px 0;
+    }
+}
+
+.musica-centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.hechoporhtml {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+p {
+    text-align: center;
+    color: white;
+}
+
+h6 {
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+ul {
+    text-align: center;
+    color: white;
+}
+
+/* .imagenprueba {
+    text-align: center;
+    background-image: url('img/trujillocronomatico.jpg');
+    background-size: repeat;
+    background-position: center;
+    font-size: 100px;
+    border-radius: 100px;
+} */
+
+.fb-comments-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 24px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin: 32px auto 24px auto;
+    width: 100%;
+    max-width: 400px;
+}
+
+.fb-like {
+    background-color: white;
+    border-radius: 50px;
+    padding: 1px;
+    text-align: center;
+}

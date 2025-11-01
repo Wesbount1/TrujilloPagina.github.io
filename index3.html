@@ -1,0 +1,306 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>Tetris Personalizado</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas {
+      border: 2px solid #444;
+      background: black;
+      margin-top: 10px;
+    }
+
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn {
+      background: #444;
+      color: white;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .scoreboard {
+      margin-top: 10px;
+    }
+
+    .gameover {
+      margin-top: 10px;
+      color: red;
+      font-size: 20px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      width: 250px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label {
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #444;
+      color: white;
+    }
+
+    select {
+      padding: 8px;
+      border-radius: 6px;
+      background: #444;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        font-size: 18px;
+        padding: 15px;
+      }
+
+      input[type="text"] {
+        width: 90%;
+      }
+
+      label {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tetris 🎮</h1>
+  <canvas height="400" id="tetris" width="240"></canvas>
+
+  <div class="scoreboard">
+    🧠 Puntos: <span id="score">0</span> |
+    ⬆️ Nivel: <span id="level">1</span> |
+    📏 Líneas: <span id="lines">0</span>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="left">⬅️</button>
+    <button class="btn" id="rotate">🔄</button>
+    <button class="btn" id="right">➡️</button>
+    <button class="btn" id="down">⬇️</button>
+  </div>
+
+  <div class="gameover" id="gameOver" style="display: none;">
+    ☠️ Juego terminado. <button class="btn" onclick="restartGame()">Reiniciar</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('tetris');
+    const context = canvas.getContext('2d');
+    context.scale(20, 20);
+
+    // Colores diferentes para las piezas
+    const colors = [
+      '#FF0D72',  // T
+      '#0DC2FF',  // O
+      '#0DFF72',  // L
+      '#F538FF',  // J
+      '#FF8E0D',  // Z
+      '#FFE138',  // S
+      '#3877FF'   // I
+    ];
+
+    let arena = createMatrix(12, 20);
+    let player = { pos: {x: 0, y: 0}, matrix: null };
+    let score = 0, lines = 0, level = 1;
+    let dropInterval = 1000, dropCounter = 0, lastTime = 0;
+    let gameOver = false;
+
+    // Crear las piezas
+    function createPiece(type) {
+      switch(type) {
+        case 'T': return [[0,0,0],[1,1,1],[0,1,0]];
+        case 'O': return [[2,2],[2,2]];
+        case 'L': return [[0,3,0],[0,3,0],[0,3,3]];
+        case 'J': return [[0,4,0],[0,4,0],[4,4,0]];
+        case 'Z': return [[5,5,0],[0,5,5]];
+        case 'S': return [[0,6,6],[6,6,0]];
+        case 'I': return [[7,7,7,7]];
+      }
+    }
+
+    // Función para elegir una pieza aleatoria
+    function randomPiece() {
+      const pieces = ['T', 'O', 'L', 'J', 'Z', 'S', 'I'];
+      const random = pieces[Math.floor(Math.random() * pieces.length)];
+      return createPiece(random);
+    }
+
+    // Dibujar las piezas en la arena
+    function drawMatrix(matrix, offset) {
+      matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            context.fillStyle = colors[value - 1];  // Color específico para cada pieza
+            context.fillRect(x + offset.x, y + offset.y, 1, 1);
+          }
+        });
+      });
+    }
+
+    // Crear la arena
+    function createMatrix(w, h) {
+      const matrix = [];
+      while (h--) {
+        matrix.push(new Array(w).fill(0));
+      }
+      return matrix;
+    }
+
+    // Rotar las piezas
+    function rotate(matrix) {
+      return matrix[0].map((_, i) => matrix.map(row => row[i])).reverse();
+    }
+
+    // Mover la pieza
+    function playerMove(offset) {
+      player.pos.x += offset;
+      if (collide(arena, player)) {
+        player.pos.x -= offset;
+      }
+    }
+
+    // Bajar la pieza
+    function playerDrop() {
+      player.pos.y++;
+      if (collide(arena, player)) {
+        player.pos.y--;
+        merge(arena, player);
+        resetPlayer();
+        arenaSweep();
+        updateScore();
+      }
+    }
+
+    // Rotar la pieza
+    function playerRotate() {
+      const matrix = rotate(player.matrix);
+      const offset = player.pos.x;
+      player.pos.x = player.pos.x + 1;
+      if (collide(arena, player)) {
+        player.pos.x = offset - 1;
+      }
+      player.matrix = matrix;
+    }
+
+    // Combinar la pieza con la arena
+    function merge(arena, player) {
+      player.matrix.forEach((row, y) => {
+        row.forEach((value, x) => {
+          if (value !== 0) {
+            arena[y + player.pos.y][x + player.pos.x] = value;
+          }
+        });
+      });
+    }
+
+    // Reiniciar la pieza
+    function resetPlayer() {
+      player.matrix = randomPiece(); // Elegir una pieza aleatoria
+      player.pos.y = 0;
+      player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+      if (collide(arena, player)) {
+        gameOver = true;
+        document.getElementById('gameOver').style.display = 'block';
+      }
+    }
+
+    // Barrer las líneas completas
+    function arenaSweep() {
+      outer: for (let y = arena.length - 1; y >= 0; --y) {
+        if (arena[y].every(cell => cell !== 0)) {
+          arena.splice(y, 1);
+          arena.unshift(new Array(arena[0].length).fill(0));
+          lines++;
+          score += 100;
+          level = Math.floor(lines / 10) + 1;
+        }
+      }
+    }
+
+    // Actualizar la puntuación
+    function updateScore() {
+      document.getElementById('score').textContent = score;
+      document.getElementById('level').textContent = level;
+      document.getElementById('lines').textContent = lines;
+    }
+
+    // Actualizar el juego
+    function update(time = 0) {
+      if (gameOver) return;
+      const deltaTime = time - lastTime;
+      lastTime = time;
+      dropCounter += deltaTime;
+      if (dropCounter > dropInterval) {
+        playerDrop();
+        dropCounter = 0;
+      }
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      drawMatrix(arena, {x: 0, y: 0});
+      drawMatrix(player.matrix, player.pos);
+      requestAnimationFrame(update);
+    }
+
+    // Reiniciar el juego
+    function restartGame() {
+      arena = createMatrix(12, 20);
+      player.pos = {x: 0, y: 0};
+      player.matrix = randomPiece(); // Generar una pieza aleatoria al iniciar el juego
+      score = 0;
+      lines = 0;
+      level = 1;
+      gameOver = false;
+      document.getElementById('gameOver').style.display = 'none';
+      update();
+    }
+
+    // Manejar las colisiones
+    function collide(arena, player) {
+      const [m, o] = [player.matrix, player.pos];
+      for (let y = 0; y < m.length; ++y) {
+        for (let x = 0; x < m[y].length; ++x) {
+          if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    // Funciones de control de los botones
+    document.getElementById('left').addEventListener('click', () => playerMove(-1));
+    document.getElementById('right').addEventListener('click', () => playerMove(1));
+    document.getElementById('down').addEventListener('click', () => playerDrop());
+    document.getElementById('rotate').addEventListener('click', () => playerRotate());
+
+    // Iniciar el juego
+    restartGame();
+  </script>
+</body>
+</html>

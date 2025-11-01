@@ -1,0 +1,1 @@
+console.log("Si encontraste esto manda un mensaje a josearmandohtmlguzman@gmail.com y tendras una carta legendaria en la trujillo dex");

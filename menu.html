@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de la Trujillo Dex</title>
+    <link rel="stylesheet" href="styles6.css">
+</head>
+<body>
+    <h1 class="casatitulo">Menu de Trujillo Dex</h1>
+    <form onsubmit="location.href='TrujilloDex.html#'+this.numero.value; return false;">
+  <input type="number" name="numero" min="1" max="54" placeholder="Número (1-54)" required>
+  <button type="submit">Ir</button>
+</form>
+    <style>
+        a {
+            text-decoration: none;
+            background-color: blue;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: white;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 12px 12px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
+        input[type="number"] {
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            width: 150px;
+        }
+    </style>
+</body>
+</html>

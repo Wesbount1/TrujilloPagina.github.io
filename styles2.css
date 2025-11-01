@@ -1,0 +1,86 @@
+.casatitulo {
+    text-align: center;
+    color: white;
+}
+
+/* body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: black;
+} */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}    
+
+body {
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    background-color: black;
+}
+
+.imagen-centrada {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.boton-centro {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.boton-grande {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 40px;
+    font-size: 2rem;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+    cursor: pointer;
+}
+.boton-grande:hover {
+    background-color: #0056b3;
+}
+
+.musica-centro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.hechoporhtml {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+p {
+    text-align: center;
+    color: white;
+}
+
+h6 {
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+}
+
+ul {
+    text-align: center;
+    color: white;
+}
