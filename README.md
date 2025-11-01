@@ -4,7 +4,15 @@ Descripción
 
 Este repositorio contiene el código fuente para la página web dedicada al popular fenómeno viral de Facebook: "El Trujillo Verso".
 
-Puedes visitar la página en vivo aquí: https://wesbount1.github.io/TrujilloPagina.github.io/
+Puedes visitar la página en vivo aquí:
+
+Pagina en GitHub:
+
+https://wesbount1.github.io/TrujilloPagina.github.io/
+
+Pagina en Netlify:
+
+https://magnificent-cobbler-196570.netlify.app
 
 Características
 Trujillo Dex: Una Galeria basica donde hay una galeria de algunos Trujillos.
